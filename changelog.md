@@ -1,1 +1,1 @@
-- CompatWoodType: Added undetected Eternal-Tales' puratorium (v2.13.69)
+- fixed some important code that was accidentally commented out for some god knows why reasons
