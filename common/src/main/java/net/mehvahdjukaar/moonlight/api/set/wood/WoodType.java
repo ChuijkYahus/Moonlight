@@ -178,6 +178,12 @@ public class WoodType extends BlockType {
         this.addChild("sign", this.findRelatedEntry("sign", BuiltInRegistries.BLOCK));
         this.addChild("wall_sign", this.findRelatedEntry("wall_sign", BuiltInRegistries.BLOCK));
 
+
+        if (this.id.getNamespace().matches("tfc|afc")) { // Including unidue blocks' path
+            this.addChild("sign", this.findRelatedEntry("sign", "", BuiltInRegistries.BLOCK));
+            this.addChild("hanging_sign", this.findRelatedEntry("hanging_sign/wrought_sign", "", BuiltInRegistries.BLOCK));
+        }
+
         if (fence != null && CompatHandler.DIAGONALFENCES) {
             var diagonalFence = BuiltInRegistries.BLOCK.getOptional(
                     ResourceLocation.fromNamespaceAndPath("diagonalfences", Utils.getID(fence)
