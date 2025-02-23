@@ -102,11 +102,6 @@ public class FakeServerLevel extends ServerLevel {
     }
 
     @Override
-    public void close() throws IOException {
-       // super.close();
-    }
-
-    @Override
     public BlockPos getSharedSpawnPos() {
         return BlockPos.ZERO;
     }
