@@ -49,6 +49,7 @@ dependencies {
     modCompileOnly("curse.maven:quark-oddities-301051:3575623")
     modCompileOnly("curse.maven:quark-243121:4463411")
     modCompileOnly("curse.maven:the-twilight-forest-227639:4755494")
+    modCompileOnly("curse.maven:alltheleaks-1091339:5936734")
     //modRuntimeOnly("curse.maven:official-divinerpg-363543:5715606")
     //modRuntimeOnly("curse.maven:every-compat-628539:5792496")
     //modRuntimeOnly("curse.maven:regions-unexplored-659110:5151869")
