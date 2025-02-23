@@ -3,9 +3,9 @@ package net.mehvahdjukaar.moonlight.api.set.wood;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlockType;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
+import net.mehvahdjukaar.moonlight.core.CompatHandler;
 import net.mehvahdjukaar.moonlight.core.Moonlight;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -31,7 +30,8 @@ public class WoodType extends BlockType {
 
     public static Codec<WoodType> CODEC;
     public static StreamCodec<FriendlyByteBuf, WoodType> STREAM_CODEC;
-    static{
+
+    static {
         WoodTypeRegistry.touch();
     }
 
@@ -166,7 +166,8 @@ public class WoodType extends BlockType {
         this.addChild("stripped_wood", this.findStrippedLog("wood", "hyphae"));
         this.addChild("slab", this.findRelatedEntry("slab", BuiltInRegistries.BLOCK));
         this.addChild("stairs", this.findRelatedEntry("stairs", BuiltInRegistries.BLOCK));
-        this.addChild("fence", this.findRelatedEntry("fence", BuiltInRegistries.BLOCK));
+        Block fence = this.findRelatedEntry("fence", BuiltInRegistries.BLOCK);
+        this.addChild("fence", fence);
         this.addChild("fence_gate", this.findRelatedEntry("fence_gate", BuiltInRegistries.BLOCK));
         this.addChild("door", this.findRelatedEntry("door", BuiltInRegistries.BLOCK));
         this.addChild("trapdoor", this.findRelatedEntry("trapdoor", BuiltInRegistries.BLOCK));
@@ -176,6 +177,13 @@ public class WoodType extends BlockType {
         this.addChild("wall_hanging_sign", this.findRelatedEntry("wall_hanging_sign", BuiltInRegistries.BLOCK));
         this.addChild("sign", this.findRelatedEntry("sign", BuiltInRegistries.BLOCK));
         this.addChild("wall_sign", this.findRelatedEntry("wall_sign", BuiltInRegistries.BLOCK));
+
+        if (fence != null && CompatHandler.DIAGONALFENCES) {
+            var diagonalFence = BuiltInRegistries.BLOCK.getOptional(
+                    ResourceLocation.fromNamespaceAndPath("diagonalfences", Utils.getID(fence)
+                            .toString().replace(":", "/")));
+            diagonalFence.ifPresent(block -> this.addChild("diagonalfences:fence", block));
+        }
     }
 
     @Override
