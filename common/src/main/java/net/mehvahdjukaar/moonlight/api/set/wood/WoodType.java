@@ -188,7 +188,7 @@ public class WoodType extends BlockType {
 
         if (fence != null && CompatHandler.DIAGONALFENCES) {
             var diagonalFence = BuiltInRegistries.BLOCK.getOptional(
-                    ResourceLocation.fromNamespaceAndPath("diagonalfences", Utils.getID(fence)
+                    new ResourceLocation("diagonalfences", Utils.getID(fence)
                             .toString().replace(":", "/")));
             diagonalFence.ifPresent(block -> this.addChild("diagonalfences:fence", block));
         }
