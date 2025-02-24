@@ -55,6 +55,7 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.MutableDataComponentHolder;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
@@ -284,6 +285,10 @@ public class PlatHelperImpl {
 
     public static void invokeLevelUnload(Level l) {
         NeoForge.EVENT_BUS.post(new LevelEvent.Unload(l)); //unload level with event shit
+    }
+
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        return instance instanceof FakePlayer;
     }
 
 
