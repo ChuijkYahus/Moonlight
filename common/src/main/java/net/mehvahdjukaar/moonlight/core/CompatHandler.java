@@ -1,6 +1,14 @@
 package net.mehvahdjukaar.moonlight.core;
 
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.ChunkTaskPriorityQueueSorter;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.thread.ProcessorHandle;
+import net.minecraft.world.level.saveddata.maps.MapId;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
@@ -16,7 +24,6 @@ public class CompatHandler {
 
     private static int compareVersions(String version1, String version2) {
         if (version2.contains("-")) {
-            Fake
             version2 = version2.split("-")[1];
         }
         if (version1.contains("-")) {
