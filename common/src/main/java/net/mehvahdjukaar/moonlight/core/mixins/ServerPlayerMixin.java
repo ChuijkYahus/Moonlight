@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin {
 
-    //for some reason this takes ahuge amount of time when
+    //for some reason this takes huge amount of time, specially when it encounter emoty chunks
     @WrapWithCondition(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V"))
     private boolean ml$preventUselessCalculations(ServerPlayer instance, ServerLevel level) {
         if (PlatHelper.isFakePlayer(instance)) {
