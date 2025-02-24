@@ -1,10 +1,7 @@
 package net.mehvahdjukaar.moonlight.core.mixins;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.mehvahdjukaar.moonlight.api.misc.fake_level.FakeServerLevel;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,11 +12,11 @@ import org.spongepowered.asm.mixin.injection.At;
 public class ServerPlayerMixin {
 
     //for some reason this takes ahuge amount of time when
-    @WrapOperation(method = "<init>",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;adjustSpawnLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"))
-    private BlockPos ml$preventUselessCalculations(ServerPlayer instance, ServerLevel serverLevel, BlockPos blockPos, Operation<BlockPos> original){
-        if(PlatHelper.isFakePlayer(instance)){
-            return BlockPos.ZERO;
+    @WrapWithCondition(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V"))
+    private boolean ml$preventUselessCalculations(ServerPlayer instance, ServerLevel level) {
+        if (PlatHelper.isFakePlayer(instance)) {
+            return false;
         }
-        return original.call(instance, serverLevel, blockPos);
+        return true;
     }
 }

@@ -106,6 +106,11 @@ public class PlatHelper {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        throw new AssertionError();
+    }
+
     public enum Platform {
         FORGE, FABRIC;
         private static boolean quilt = false;

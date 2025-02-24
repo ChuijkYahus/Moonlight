@@ -45,6 +45,7 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -277,6 +278,10 @@ public class PlatHelperImpl {
 
     public static void invokeLevelUnload(Level l) {
         MinecraftForge.EVENT_BUS.post(new LevelEvent.Unload(l)); //unload level with event shit
+    }
+
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        return instance instanceof FakePlayer;
     }
 
 

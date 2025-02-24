@@ -299,5 +299,9 @@ public class PlatHelperImpl {
         }
     }
 
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        return instance instanceof FakePlayer;
+    }
+
 
 }
