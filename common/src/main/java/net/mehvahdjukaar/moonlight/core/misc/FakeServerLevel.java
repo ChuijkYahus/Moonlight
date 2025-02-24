@@ -239,7 +239,13 @@ public class FakeServerLevel extends ServerLevel {
 
     @Override
     public @Nullable ChunkAccess getChunk(int x, int z, ChunkStatus requiredStatus, boolean nonnull) {
-        return super.getChunk(x, z, requiredStatus, nonnull); //add dummy chunk here at least?
+        //same as super
+        ChunkAccess chunkaccess = this.getChunkSource().getChunk(x, z, requiredStatus, nonnull);
+        if (chunkaccess == null && nonnull) {
+            throw new IllegalStateException("Should always be able to create a chunk!");
+        } else {
+            return chunkaccess;
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ public class CompatHandler {
 
     private static int compareVersions(String version1, String version2) {
         if (version2.contains("-")) {
+            Fake
             version2 = version2.split("-")[1];
         }
         if (version1.contains("-")) {
