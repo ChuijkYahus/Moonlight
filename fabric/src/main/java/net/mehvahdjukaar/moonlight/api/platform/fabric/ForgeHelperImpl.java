@@ -1,10 +1,15 @@
 package net.mehvahdjukaar.moonlight.api.platform.fabric;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DynamicOps;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -175,5 +180,13 @@ public class ForgeHelperImpl {
 
     public static boolean isInFluidThatCanExtinguish(Entity entity) {
         return false;
+    }
+
+    public static <T> RegistryOps<T> conditionalOps(DynamicOps<T> ops, HolderLookup.Provider provider, SimplePreparableReloadListener<?> rel) {
+        return RegistryOps.create(ops, provider);
+    }
+
+    public static <T> Codec<Optional<T>> conditionalCodec(Codec<T> codec) {
+        return codec.xmap(Optional::of, Optional::get);
     }
 }

@@ -1,10 +1,14 @@
 package net.mehvahdjukaar.moonlight.api.platform;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.DynamicOps;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -53,10 +57,20 @@ public class ForgeHelper {
         throw new AssertionError();
     }
 
+    @Deprecated(forRemoval = true)
     public static <T> DynamicOps<T> addConditionOps(DynamicOps<T> ops) {
-        return ops; //TODO: 1.20.4
+        return ops;
     }
 
+    @ExpectPlatform
+    public static <T> RegistryOps<T> conditionalOps(DynamicOps<T> ops, HolderLookup.Provider provider, SimplePreparableReloadListener<?> reloader) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <T> Codec<Optional<T>> conditionalCodec(Codec<T> codec) {
+        throw new AssertionError();
+    }
 
     @Deprecated(forRemoval = true)
     public static boolean onProjectileImpact(Projectile projectile, HitResult blockHitResult) {

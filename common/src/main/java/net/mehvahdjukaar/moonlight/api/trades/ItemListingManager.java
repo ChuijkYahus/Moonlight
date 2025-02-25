@@ -67,7 +67,7 @@ public class ItemListingManager extends SimpleJsonResourceReloadListener {
         customTrades.clear();
         specialCustomTrades.clear();
 
-        DynamicOps<JsonElement> ops = ForgeHelper.addConditionOps(RegistryOps.create(JsonOps.INSTANCE, registryAccess));
+        DynamicOps<JsonElement> ops = ForgeHelper.conditionalOps(JsonOps.INSTANCE, registryAccess, this);
         for (var e : jsons.entrySet()) {
             var json = e.getValue();
             var id = e.getKey();

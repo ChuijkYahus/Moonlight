@@ -13,6 +13,7 @@
   ],
   "mixins": [
     "ConditionHackMixin",
+    "ContextAwareReloadListenerAccessor",
     "FireBlockMixin",
     "PacketDistributorHackMixin",
     "SelfEntitySpawnDataMixin",

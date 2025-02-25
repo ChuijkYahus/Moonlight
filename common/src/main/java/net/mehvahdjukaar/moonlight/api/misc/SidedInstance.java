@@ -15,6 +15,7 @@ import java.util.function.Function;
 // how to do that tho? we need a way we can then retrieve with a RegistryAccess or Level
 // Weak HashMap using HolderLookup.Provider as key? nope those can be subclasses and are very often, leading to more undeded instances
 // so we use a dummy object from one of the registries datapack registires...
+// map has weak keys so this is reload safe
 public class SidedInstance<T> {
 
     //hack so we can have essentially an identity map
@@ -38,6 +39,14 @@ public class SidedInstance<T> {
                     () -> this.factory.apply(ra));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void invalidate(HolderLookup.Provider ra) {
+        ChatType dummyKey = getDummyKey(ra);
+        T instance = instances.getIfPresent(dummyKey);
+        if (instance != null) {
+            instances.invalidate(dummyKey);
         }
     }
 
