@@ -84,7 +84,7 @@ public class MoonlightForge {
 
     @SubscribeEvent
     public static void beforeServerStart(ServerAboutToStartEvent event) {
-        Moonlight.beforeServerStart();
+        Moonlight.beforeServerStart(event.getServer().registryAccess());
     }
 
     @SubscribeEvent

@@ -55,6 +55,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
@@ -201,6 +202,7 @@ public class Utils {
 
     //very very hacky
     //attempts to grab the right registry access for the current thread, hopefully matching the logical side one
+    @ApiStatus.Experimental
     public static RegistryAccess hackyGetRegistryAccess() {
         var s = PlatHelper.getCurrentServer();
         if (PlatHelper.getPhysicalSide().isClient()) {

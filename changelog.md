@@ -1,1 +1,1 @@
-- fixed some important code that was accidentally commented out for some god knows why reasons
+- made it so fake players fromm both loaders dont try to adjust their spawn position. technically this could be considered a vanilla (or forge/fabric) bug as when spawn radius is large the setting of spawn position can take a tremendous amount of time, obviously not even needed for fake players

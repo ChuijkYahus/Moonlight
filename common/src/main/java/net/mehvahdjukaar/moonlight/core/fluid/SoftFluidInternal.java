@@ -8,6 +8,7 @@ import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.core.network.ClientBoundFinalizeFluidsMessage;
 import net.mehvahdjukaar.moonlight.core.network.ModMessages;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -85,8 +86,7 @@ public class SoftFluidInternal {
     }
 
     //on data load
-    public static void doPostInitServer() {
-        var reg = Utils.hackyGetRegistryAccess();
+    public static void doPostInitServer(RegistryAccess reg) {
         populateSlaveMaps(reg);
         //registers existing fluids. also update the salve maps
         //we need to call this on bont server and client as this happens too late and these wont be sent

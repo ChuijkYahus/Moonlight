@@ -119,6 +119,7 @@ public class MapDataInternal {
         throw new AssertionError();
     }
 
+    @Deprecated
     public static Registry<MapDecorationType<?, ?>> hackyGetRegistry() {
         return Utils.hackyGetRegistryAccess().registryOrThrow(KEY);
     }

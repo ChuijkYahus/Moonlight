@@ -33,6 +33,7 @@ import net.mehvahdjukaar.moonlight.core.misc.VillagerAIInternal;
 import net.mehvahdjukaar.moonlight.core.network.ModMessages;
 import net.mehvahdjukaar.moonlight.core.set.BlockSetInternal;
 import net.mehvahdjukaar.moonlight.core.set.BlocksColorInternal;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -46,6 +47,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -139,8 +141,8 @@ public class Moonlight {
     }
 
     @EventCalled
-    public static void beforeServerStart() {
-       SoftFluidInternal.doPostInitServer();
+    public static void beforeServerStart(RegistryAccess ra) {
+       SoftFluidInternal.doPostInitServer(ra);
     }
 
     public static void assertInitPhase() {
