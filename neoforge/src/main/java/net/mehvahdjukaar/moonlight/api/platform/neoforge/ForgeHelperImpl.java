@@ -88,7 +88,7 @@ public class ForgeHelperImpl {
     }
 
 
-    public static <T> DynamicOps<T> conditionalOps(DynamicOps<T> ops, HolderLookup.Provider provider, SimplePreparableReloadListener<?> reloader) {
+    public static <T> RegistryOps<T> conditionalOps(DynamicOps<T> ops, HolderLookup.Provider provider, SimplePreparableReloadListener<?> reloader) {
         var rel = ((ContextAwareReloadListenerAccessor) reloader);
         return new ConditionalOps<>(RegistryOps.create(ops, provider), rel.invokeGetContext());
     }

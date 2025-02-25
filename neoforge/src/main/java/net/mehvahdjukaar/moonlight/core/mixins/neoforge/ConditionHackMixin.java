@@ -18,9 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Iterator;
 import java.util.Map;
 
+//TODO: remove this once all mods have updated
+@Deprecated(forRemoval = true)
 @Mixin(SimplePreparableReloadListener.class)
 public abstract class ConditionHackMixin extends ContextAwareReloadListener {
 
+    @Deprecated(forRemoval = true)
     //literally copies what fabric does
     @Inject(at = @At("HEAD"), method = "method_18790")
     private void applyResourceConditions(ResourceManager resourceManager, ProfilerFiller profiler, Object object, CallbackInfo ci) {

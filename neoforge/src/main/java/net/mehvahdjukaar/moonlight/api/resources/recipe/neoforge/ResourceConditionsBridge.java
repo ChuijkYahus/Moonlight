@@ -35,6 +35,9 @@ public class ResourceConditionsBridge {
     public static boolean matchesForgeConditions(JsonObject obj, ICondition.IContext context, String conditionKey) {
         JsonElement conditionElement = obj.get(conditionKey);
         if (conditionElement != null) {
+            if (obj.has("neoforge:conditions")) {
+                return false;
+            }
             var newObj = replaceKeyInJsonRecursive(conditionElement,
                     "condition", "type",
                     "fabric", "neoforge");
