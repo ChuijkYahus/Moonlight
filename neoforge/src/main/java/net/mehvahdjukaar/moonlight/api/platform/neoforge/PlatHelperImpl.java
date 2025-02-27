@@ -55,11 +55,13 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.MutableDataComponentHolder;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.neoforged.neoforgespi.language.IModInfo;
 import org.jetbrains.annotations.Nullable;
@@ -243,11 +245,11 @@ public class PlatHelperImpl {
     }
 
     //maybe move these
-
     public static void addServerReloadListener(Function<HolderLookup.Provider, PreparableReloadListener> listener, ResourceLocation location) {
         Moonlight.assertInitPhase();
 
-        Consumer<AddReloadListenerEvent> eventConsumer = event -> event.addListener(listener.apply(event.getRegistryAccess()));
+        Consumer<AddReloadListenerEvent> eventConsumer = event -> event.addListener(
+                listener.apply(event.getServerResources().getRegistryLookup()));
         NeoForge.EVENT_BUS.addListener(eventConsumer);
     }
 
@@ -279,6 +281,14 @@ public class PlatHelperImpl {
         if (to instanceof MutableDataComponentHolder mc) {
             mc.set(type, componentValue);
         }
+    }
+
+    public static void invokeLevelUnload(Level l) {
+        NeoForge.EVENT_BUS.post(new LevelEvent.Unload(l)); //unload level with event shit
+    }
+
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        return instance instanceof FakePlayer;
     }
 
 

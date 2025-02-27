@@ -1,15 +1,15 @@
 package net.mehvahdjukaar.moonlight.api.misc.fake_level;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import net.mehvahdjukaar.moonlight.core.Moonlight;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -19,20 +19,31 @@ public class FakeLevelManager {
 
     @ApiStatus.Internal
     @VisibleForTesting
-    public static Collection<Level> invalidateAll() {
-        var unloaded = new ArrayList<>(INSTANCES.values());
-        new ArrayList<>(INSTANCES.keySet()).forEach(FakeLevelManager::invalidate);
-        return unloaded;
+    public static void invalidateAll() {
+        new ArrayList<>(INSTANCES.values()).forEach(FakeLevelManager::invalidate);
     }
 
-    @ApiStatus.Internal
-    public static void invalidate(String name) {
-        Level level = INSTANCES.remove(name);
+    // Manually invalidate one
+    public static boolean invalidate(Level level) {
+        boolean removed = INSTANCES.entrySet().removeIf(e -> e.getValue() == level);
+
+        if (level != null) PlatHelper.invokeLevelUnload(level);
         try {
-            level.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            if (level instanceof FakeServerLevel) {
+                level.close();
+            }
+        } catch (Exception e) {
+            if (PlatHelper.isDev()) {
+                throw new RuntimeException(e);
+            } else {
+                Moonlight.LOGGER.error("An error occurred while closing fake level", e);
+            }
         }
+        return removed;
+    }
+
+    @Deprecated(forRemoval = true)
+    public static void invalidate(String name) {
     }
 
     public static FakeLevel getDefaultClient(Level original) {

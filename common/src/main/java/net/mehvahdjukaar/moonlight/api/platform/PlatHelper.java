@@ -114,6 +114,16 @@ public class PlatHelper {
         throw new AssertionError();
     }
 
+    @Contract
+    @ExpectPlatform
+    public static void invokeLevelUnload(Level l) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        throw new AssertionError();
+    }
 
     public enum Platform {
         FORGE, FABRIC;

@@ -6,6 +6,7 @@ import com.mojang.serialization.DynamicOps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -236,7 +237,8 @@ public class PlatHelperImpl {
             }
 
             @Override
-            public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
+            public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler,
+                                                  ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
                 return instance.reload(preparationBarrier, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor);
             }
         });
@@ -293,6 +295,16 @@ public class PlatHelperImpl {
 
     public static void addReloadableCommonSetup(BiConsumer<RegistryAccess, Boolean> setup) {
         CommonLifecycleEvents.TAGS_LOADED.register(setup::accept);
+    }
+
+    public static void invokeLevelUnload(Level l) {
+        if (l instanceof ServerLevel sl) {
+            ServerWorldEvents.UNLOAD.invoker().onWorldUnload(sl.getServer(), sl);
+        }
+    }
+
+    public static boolean isFakePlayer(ServerPlayer instance) {
+        return instance instanceof FakePlayer;
     }
 
 

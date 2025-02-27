@@ -170,7 +170,8 @@ public abstract class BlockTypeRegistry<T extends BlockType> {
         if (t != null) return t;
         if (itemLike == Items.AIR || itemLike == Blocks.AIR) return null;
         if (itemLike instanceof BlockItem bi) {
-            return childrenToType.get(bi.getBlock());
+            var ofBlock=  childrenToType.get(bi.getBlock());
+            if (ofBlock != null) return ofBlock;
         }
         if (itemLike instanceof Block b) {
             Item item = b.asItem();

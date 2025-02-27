@@ -1,15 +1,23 @@
-package net.mehvahdjukaar.moonlight.api.integration;
+package net.mehvahdjukaar.moonlight.core.integration;
 
 import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 //place for all known weird hardcoded wood types from mods that aren't getting detected
 public class CompatWoodTypes {
 
     public static void init() {
+        // Eternal Tales
+        var comets = WoodType.Finder.simple("eternal_tales", "comets", "comets_log", "comets_log");
+        comets.addChild("stripped_log", "striped_comets_log");
+        BlockSetAPI.addBlockTypeFinder(WoodType.class, comets);
+
+        BlockSetAPI.addBlockTypeFinder(WoodType.class,
+                woodTypeFinder(false, "eternal_tales", "purgatorium", "purgatorium_planks", "log", "wood", "stripped_log", ""));
 
         // Blocks +
         BlockSetAPI.addBlockTypeFinder(WoodType.class,

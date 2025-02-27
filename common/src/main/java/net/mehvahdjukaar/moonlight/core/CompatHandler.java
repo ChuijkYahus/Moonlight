@@ -1,7 +1,12 @@
 package net.mehvahdjukaar.moonlight.core;
 
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.ChunkTaskPriorityQueueSorter;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.thread.ProcessorHandle;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.jetbrains.annotations.ApiStatus;
@@ -15,6 +20,7 @@ public class CompatHandler {
     public static final boolean YACL = PlatHelper.isModLoaded("yet-another-config-lib");
     public static final boolean CLOTH_CONFIG = PlatHelper.isModLoaded("cloth-config");
     public static final boolean IRIS = PlatHelper.isModLoaded("iris") || PlatHelper.isModLoaded("oculus");
+    public static final boolean DIAGONALFENCES = PlatHelper.isModLoaded("diagonalfences");
 
     private static int compareVersions(String version1, String version2) {
         if (version2.contains("-")) {

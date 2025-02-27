@@ -67,7 +67,7 @@ public class ItemListingManager extends SimpleJsonResourceReloadListener {
         customTrades.clear();
         specialCustomTrades.clear();
 
-        DynamicOps<JsonElement> ops = ForgeHelper.addConditionOps(RegistryOps.create(JsonOps.INSTANCE, registryAccess));
+        DynamicOps<JsonElement> ops = ForgeHelper.conditionalOps(JsonOps.INSTANCE, registryAccess, this);
         for (var e : jsons.entrySet()) {
             var json = e.getValue();
             var id = e.getKey();
@@ -86,25 +86,25 @@ public class ItemListingManager extends SimpleJsonResourceReloadListener {
         var targetId = id.withPath(p -> p.substring(0, p.lastIndexOf('/')));
         var profession = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(targetId);
         if (profession.isPresent()) {
-            ModItemListing trade = parseOrThrow(json, id, ops);
-            if ((trade instanceof NoOpListing)) {
+            var trade = parseOrThrow(json, id, ops);
+            if (trade.isEmpty() || (trade.get() instanceof NoOpListing)) {
                 // no op
-            } else if (trade instanceof RemoveNonDataListingListing) {
+            } else if (trade.get() instanceof RemoveNonDataListingListing) {
                 //TODO: add remove trades
             } else {
                 customTrades.computeIfAbsent(profession.get(), t ->
-                                new Int2ObjectArrayMap<>()).computeIfAbsent(trade.getLevel(), a -> new ArrayList<>())
-                        .add(trade);
+                                new Int2ObjectArrayMap<>()).computeIfAbsent(trade.get().getLevel(), a -> new ArrayList<>())
+                        .add(trade.get());
             }
             return;
         }
         var entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(targetId);
         if (entityType.isPresent()) {
-            ModItemListing trade = parseOrThrow(json, id, ops);
-            if (!(trade instanceof NoOpListing)) {
+            var trade = parseOrThrow(json, id, ops);
+            if (trade.isPresent() && !(trade.get() instanceof NoOpListing)) {
                 specialCustomTrades.computeIfAbsent(entityType.get(), t ->
-                                new Int2ObjectArrayMap<>()).computeIfAbsent(trade.getLevel(), a -> new ArrayList<>())
-                        .add(trade);
+                                new Int2ObjectArrayMap<>()).computeIfAbsent(trade.get().getLevel(), a -> new ArrayList<>())
+                        .add(trade.get());
             }
 
         } else {
@@ -142,10 +142,9 @@ public class ItemListingManager extends SimpleJsonResourceReloadListener {
         }
     }
 
-    private static ModItemListing parseOrThrow(JsonElement j, ResourceLocation id, DynamicOps<JsonElement> ops) {
-        return ModItemListing.CODEC.decode(ops, j)
-                .getOrThrow(errorMsg -> new JsonParseException("Failed to parse custom trade with id " + id + " - error: " + errorMsg))
-                .getFirst();
+    private static Optional<ModItemListing> parseOrThrow(JsonElement j, ResourceLocation id, DynamicOps<JsonElement> ops) {
+        return ForgeHelper.conditionalCodec(ModItemListing.CODEC).parse(ops, j)
+                .getOrThrow();
     }
 
     public static List<? extends VillagerTrades.ItemListing> getVillagerListings(VillagerProfession profession, int level) {
