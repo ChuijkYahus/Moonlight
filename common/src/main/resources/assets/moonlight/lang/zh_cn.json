@@ -7,6 +7,7 @@
   "message.moonlight.anti_repost_link": "这里",
 
 
+
   "wood_type.minecraft.oak": "橡木",
   "wood_type.minecraft.spruce": "云杉木",
   "wood_type.minecraft.birch": "白桦木",
@@ -134,7 +135,7 @@
   "leaves_type.ars_nouveau.red_archwood": "烈焰至高",
   "leaves_type.ars_nouveau.green_archwood": "繁茂至高",
   "leaves_type.ars_nouveau.purple_archwood": "恼人至高",
-  
+
   "wood_type.arts_and_crafts.cork": "软木",
   "leaves_type.arts_and_crafts.cork": "软木",
 
@@ -1695,6 +1696,8 @@
   "leaves_type.undergarden.smogstem": "烟梗",
   "leaves_type.undergarden.wigglewood": "摇蜿",
   "leaves_type.undergarden.grongle": "油绿",
+
+  "wood_type.unusualend.chorus_cane": "紫颂竹",
 
   "wood_type.upgrade_aquatic.driftwood": "浮木",
   "wood_type.upgrade_aquatic.river": "桑木",
