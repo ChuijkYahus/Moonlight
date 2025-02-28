@@ -501,6 +501,11 @@
   "leaves_type.culturaldelights.avocado": "牛油果",
   "leaves_type.culturaldelights.fruiting_avocado": "结果的牛油果",
 
+  "wood_type.dawnoftimebuilder.waxed_oak": "涂蜡橡木",
+  "wood_type.dawnoftimebuilder.charred_spruce": "焦黑云杉木",
+  "leaves_type.dawnoftimebuilder.waxed_oak": "涂蜡橡树",
+  "leaves_type.dawnoftimebuilder.charred_spruce": "焦黑云杉",
+
   "wood_type.deep_aether.roseroot": "瑰根木",
   "wood_type.deep_aether.yagroot": "榴根木",
   "wood_type.deep_aether.cruderoot": "朴根木",
